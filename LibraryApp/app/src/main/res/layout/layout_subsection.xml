@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/gray1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,10 +30,10 @@
                 android:paddingEnd="10dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:textSize="11sp"
+                android:textSize="15sp"
                 android:text="010"
                 android:textColor="@color/white"
-                android:background="@color/gray"
+                android:background="@color/brownshade3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

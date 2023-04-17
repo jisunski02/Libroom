@@ -16,6 +16,10 @@ public class AppUtils {
     public static String VIEW_SECTION_ENDPOINT = BASE_URL+ "viewsection.php";
     public static String VIEW_SUB_SECTION_ENDPOINT = BASE_URL+ "viewsubsection.php";
     public static String VIEW_BOOKS_BY_SECTIONID_ENDPOINT = BASE_URL+ "viewbook.php";
+    public static String LOGIN_STUDENT_ENDPOINT = BASE_URL+ "loginuser.php";
+    public static String VIEW_STUDENT_PROFILE_ENDPOINT = BASE_URL+ "viewstudentprofile.php?";
+    public static String RESERVE_BOOK_ENDPOINT = BASE_URL+ "borrowbook.php";
+    public static String VIEW_RESERVATION_ENDPOINT = BASE_URL+ "viewreservation.php?";
 
     public static void gotoActivity(Activity fromActivity, Class<?> toActivity){
         Intent intent = new Intent(fromActivity, toActivity);

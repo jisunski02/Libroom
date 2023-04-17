@@ -18,7 +18,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
 
     LayoutSectionBinding binding;
     Context context;
-    private List<SectionDataModel> sectionDataModelList;
+    private final List<SectionDataModel> sectionDataModelList;
     int selected_position = -1;
     private OnItemClickListener onItemClickListener;
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray1"
     tools:context=".fragments.HomeFragment">
 
     <androidx.cardview.widget.CardView
@@ -19,39 +20,60 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="History"
-                android:textStyle="bold"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:src="@drawable/ic_construction"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This module is still under construction..."
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+            <LinearLayout
                 android:gravity="center"
-                android:textStyle="bold"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </LinearLayout>
+                <ImageView
+                    android:src="@drawable/libroom_iconv2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Oh! Look's like you haven't borrowed a book yet"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="In this section, you will see the list of your borrowed books but you need to login first."
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/bg_button"
+                    android:text="LOGIN"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

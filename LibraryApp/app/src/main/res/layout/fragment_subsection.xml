@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
@@ -27,11 +28,10 @@
                     android:id="@+id/tv_section_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Library Sub Sections"
+                    android:text="Library Sections"
                     android:textStyle="bold"
                     android:padding="10dp"
-                    android:background="@color/black"
-                    android:textColor="@color/white"
+                    android:textColor="@color/brownshade3"
                     android:textSize="16sp" />
 
             <TextView
@@ -71,14 +71,14 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <ImageView
-                    android:src="@drawable/section_placeholder"
+                    android:src="@drawable/ic_books"
                     android:layout_width="100dp"
                     android:layout_height="100dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No book in this section"
+                    android:text="No books in this section"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:padding="10dp"
@@ -91,7 +91,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -100,11 +99,13 @@
 
             <ProgressBar
                 android:src="@drawable/section_placeholder"
-                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:indeterminate="true"
+                android:theme="@style/CustomProgressBarTheme"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_height="10dp"/>
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_height="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -117,6 +118,74 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_nointernet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center"
+
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:src="@drawable/ic_no_internet"
+                    android:layout_width="100dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_height="100dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:text="Please check your internet connection. Make sure that Wi-Fi is on, Airplane mode is off or use Mobile data instead then try again."
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_api"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center"
+
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:src="@drawable/ic_api"
+                    android:layout_width="100dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_height="100dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:text="Web service is currently not working at the moment. Please try again later."
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

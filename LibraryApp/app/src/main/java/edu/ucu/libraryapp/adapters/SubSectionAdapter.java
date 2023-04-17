@@ -21,7 +21,7 @@ public class SubSectionAdapter extends RecyclerView.Adapter<SubSectionAdapter.Vi
 
     LayoutSubsectionBinding binding;
     Context context;
-    private List<SubSectionDataModel> subSectionDataModelList;
+    private final List<SubSectionDataModel> subSectionDataModelList;
     int selected_position = -1;
     private OnItemClickListener onItemClickListener;
 
@@ -50,7 +50,6 @@ public class SubSectionAdapter extends RecyclerView.Adapter<SubSectionAdapter.Vi
         holder.binding.tvSubsectionName.setText(subSectionDataModel.getSubSectionName());
         holder.binding.tvDeweyDecimal.setText(subSectionDataModel.getDeweyDecimal());
 
-
         holder.binding.tvDeweyDecimal.setBackgroundResource(selected_position == position ? R.drawable.bg_left_side : R.drawable.bg_left_side2);
         holder.binding.tvSubsectionName.setTextColor(Color.BLACK);
         holder.binding.tvSubsectionName.setTypeface(Typeface.defaultFromStyle(selected_position == position ? Typeface.BOLD : Typeface.NORMAL));
@@ -68,24 +67,17 @@ public class SubSectionAdapter extends RecyclerView.Adapter<SubSectionAdapter.Vi
             super(binding.getRoot());
             this.binding = binding;
 
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (onItemClickListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            onItemClickListener.onItemClick(position);
-                            notifyItemChanged(selected_position);
-                            selected_position = getAdapterPosition();
-                            notifyItemChanged(selected_position);
-
-                        }
-
+            binding.getRoot().setOnClickListener(view -> {
+                if (onItemClickListener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        onItemClickListener.onItemClick(position);
+                        notifyItemChanged(selected_position);
+                        selected_position = getAdapterPosition();
+                        notifyItemChanged(selected_position);
                     }
                 }
             });
-
         }
 
     }

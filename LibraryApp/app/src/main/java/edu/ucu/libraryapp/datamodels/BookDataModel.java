@@ -19,6 +19,7 @@ public class BookDataModel {
     private String numberOfPages;
     private String status;
 
+
     public BookDataModel(String titleID, String sectionID, String subSectionID, String bookID, String title, String titleAuthor, String sectionDewey, String sectionName, String subSectionDewey, String subsectionName, String accessionNo, String edition, String volume, String publisher, String publicationDate, String numberOfPages, String status) {
         this.titleID = titleID;
         this.sectionID = sectionID;

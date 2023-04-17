@@ -12,4 +12,8 @@
     <color name="gray">#8B8A8A</color>
     <color name="brown">#814d2e</color>
     <color name="dark_brown">#371110</color>
+    <color name="brownshade1">#FFFDDD</color>
+    <color name="brownshade2">#FFF4C2</color>
+    <color name="brownshade3">#D4AF37</color>
+    <color name="gray1">#F5F6FC</color>
 </resources>

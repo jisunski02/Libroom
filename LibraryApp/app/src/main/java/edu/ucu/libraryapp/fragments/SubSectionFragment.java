@@ -14,9 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -40,107 +43,114 @@ import edu.ucu.libraryapp.interfaces.OnItemClickListener;
 public class SubSectionFragment extends Fragment {
 
     FragmentSubsectionBinding binding;
-    private List<SubSectionDataModel> subSectionDataModelList = new ArrayList<>();
+    private final List<SubSectionDataModel> subSectionDataModelList = new ArrayList<>();
     private SubSectionAdapter subSectionAdapter;
-    private List<BookDataModel> bookDataModelList = new ArrayList<>();
-    private BookAdapter bookAdapter;
-    private String homeSectionID;
-    private String homeSectionName;
-    private String deweyDecimal;
+    private final List<BookDataModel> bookDataModelList = new ArrayList<>();
+
+    String homeSectionID;
+    String homeSectionName;
+    String deweyDecimal;
 
     boolean isSectionLoading = false;
     boolean isSubsectionLoading = false;
     private String subSectionIDCatcher;
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         binding = FragmentSubsectionBinding.inflate(inflater, container, false);
 
-
+        assert getArguments() != null;
         homeSectionID = getArguments().getString("sectionID");
         homeSectionName = getArguments().getString("sectionName");
         deweyDecimal = getArguments().getString("deweyDecimal");
 
         binding.tvSectionName.setText(homeSectionName);
 
-        binding.rvSubsection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        binding.rvBooks.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
         binding.linearLoading.setVisibility(View.VISIBLE);
 
         viewSubSection();
-        isSectionLoading = true;
-        getBookBySectionID();
 
         return binding.getRoot();
     }
 
 
     private void viewSubSection() {
+
+        isSectionLoading = true;
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, AppUtils.VIEW_SUB_SECTION_ENDPOINT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                response -> {
 
-                        try {
-                            //converting the string to json array object
-                            JSONArray section = new JSONArray(response);
+                    try {
+                        JSONArray section = new JSONArray(response);
 
-                            //traversing through all the object
-                            for (int i = 0; i < section.length(); i++) {
+                        for (int i = 0; i < section.length(); i++) {
 
-                                JSONObject sectionObject = section.getJSONObject(i);
+                            JSONObject sectionObject = section.getJSONObject(i);
 
-                                String subSectionID = sectionObject.getString("subSectionID");
-                                String deweyDecimal = sectionObject.getString("deweyDecimal");
-                                String sectionID = sectionObject.getString("sectionID");
-                                String subSectionName = sectionObject.getString("subSectionName");
+                            String subSectionID = sectionObject.getString("subSectionID");
+                            String deweyDecimal = sectionObject.getString("deweyDecimal");
+                            String sectionID = sectionObject.getString("sectionID");
+                            String subSectionName = sectionObject.getString("subSectionName");
 
-                                SubSectionDataModel subSectionDataModel = new SubSectionDataModel(subSectionID, deweyDecimal, sectionID, subSectionName);
+                            SubSectionDataModel subSectionDataModel = new SubSectionDataModel(subSectionID, deweyDecimal, sectionID, subSectionName);
 
-                                if (homeSectionID.equals(sectionID)) {
-                                    subSectionDataModelList.add(subSectionDataModel);
-                                }
-
+                            if (homeSectionID.equals(sectionID)) {
+                                subSectionDataModelList.add(subSectionDataModel);
                             }
 
-                            subSectionAdapter = new SubSectionAdapter(getContext(), subSectionDataModelList);
-                            binding.rvSubsection.setAdapter(subSectionAdapter);
-
-                            subSectionAdapter.setOnItemClickListener(new OnItemClickListener() {
-                                @Override
-                                public void onItemClick(int position) {
-                                    SubSectionDataModel subSectionDataModel = subSectionDataModelList.get(position);
-
-                                    binding.tvSubSectionName.setText(subSectionDataModel.getSubSectionName());
-                                    binding.tvSubSectionName.setVisibility(View.VISIBLE);
-                                    binding.linearLoading.setVisibility(View.VISIBLE);
-                                    binding.linearSubsection.setVisibility(View.GONE);
-                                    isSectionLoading = false;
-                                    isSubsectionLoading = true;
-                                    subSectionIDCatcher = subSectionDataModel.getSubSectionID();
-                                    getBookBySectionID();
-
-                                }
-                            });
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.e("anyText", response);
                         }
+
+                        binding.rvSubsection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                        subSectionAdapter = new SubSectionAdapter(getContext(), subSectionDataModelList);
+                        binding.rvSubsection.setAdapter(subSectionAdapter);
+
+                        getBookBySectionID();
+
+                        subSectionAdapter.setOnItemClickListener(new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                SubSectionDataModel subSectionDataModel = subSectionDataModelList.get(position);
+
+                                binding.tvSubSectionName.setText(subSectionDataModel.getSubSectionName());
+                                binding.tvSubSectionName.setVisibility(View.VISIBLE);
+                                binding.linearLoading.setVisibility(View.VISIBLE);
+                                binding.linearSubsection.setVisibility(View.GONE);
+                                isSectionLoading = false;
+                                isSubsectionLoading = true;
+                                subSectionIDCatcher = subSectionDataModel.getSubSectionID();
+                                getBookBySectionID();
+
+                            }
+                        });
+
+                    } catch (JSONException e) {
+                        binding.linearLoading.setVisibility(View.GONE);
+                        binding.linearApi.setVisibility(View.VISIBLE);
+                        binding.tvSectionName.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            //This indicates that the reuest has either time out or there is no connection
+                            binding.linearNointernet.setVisibility(View.VISIBLE);
+                            binding.tvSectionName.setVisibility(View.GONE);
+                        }
+                        else if (error instanceof ServerError) {
+                            //Indicates that the server responded with a error response
+                            binding.linearApi.setVisibility(View.VISIBLE);
+                            binding.tvSectionName.setVisibility(View.GONE);
 
+                        }
+                        binding.linearLoading.setVisibility(View.GONE);
                     }
                 });
 
-        Volley.newRequestQueue(getContext()).add(stringRequest);
+        Volley.newRequestQueue(requireActivity()).add(stringRequest);
     }
 
     private void getBookBySectionID() {
@@ -155,15 +165,20 @@ public class SubSectionFragment extends Fragment {
                 viewBooks(response);
             }
         },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(getActivity(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
-                        error.printStackTrace();
+                error -> {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        //This indicates that the reuest has either time out or there is no connection
+                        binding.linearNointernet.setVisibility(View.VISIBLE);
                     }
+                    else if (error instanceof ServerError) {
+                        //Indicates that the server responded with a error response
+                        binding.linearApi.setVisibility(View.VISIBLE);
+
+                    }
+                    binding.linearLoading.setVisibility(View.GONE);
                 });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
 
     }
@@ -213,33 +228,31 @@ public class SubSectionFragment extends Fragment {
                     bookDataModelList.add(bookDataModel);
                     binding.linearLoading.setVisibility(View.GONE);
                 }
-
-
             }
 
-
-
-            bookAdapter = new BookAdapter(getActivity(), bookDataModelList);
+            binding.rvBooks.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
+            BookAdapter bookAdapter = new BookAdapter(getActivity(), bookDataModelList);
             binding.rvBooks.setAdapter(bookAdapter);
-
-
 
             bookAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     BookDataModel bookDataModel = bookDataModelList.get(position);
-
                     Intent intent = new Intent(getActivity(), BookOverviewActivity.class);
                     intent.putExtra("title", bookDataModel.getTitle());
                     intent.putExtra("author", bookDataModel.getTitleAuthor());
                     intent.putExtra("section", bookDataModel.getSectionName());
                     intent.putExtra("sub_section", bookDataModel.getSubsectionName());
+                    intent.putExtra("dewey_decimal", bookDataModel.getSectionDewey());
+                    intent.putExtra("dewey_decimal_sub", bookDataModel.getSubSectionDewey());
                     intent.putExtra("edition", bookDataModel.getEdition());
                     intent.putExtra("volume", bookDataModel.getVolume());
                     intent.putExtra("publisher", bookDataModel.getPublisher());
                     intent.putExtra("pub_date", bookDataModel.getPublicationDate());
                     intent.putExtra("num_pages", bookDataModel.getNumberOfPages());
                     intent.putExtra("status", bookDataModel.getStatus());
+                    intent.putExtra("accession_no", bookDataModel.getAccessionNo());
+                    intent.putExtra("title_id", bookDataModel.getTitleID());
                     startActivity(intent);
 
                 }
@@ -252,8 +265,9 @@ public class SubSectionFragment extends Fragment {
                 binding.linearSubsection.setVisibility(View.GONE);
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }
+        catch (JSONException e) {
+            Log.e("Error here", e.toString());
         }
 
     }

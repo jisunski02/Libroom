@@ -16,9 +16,10 @@ import edu.ucu.libraryapp.interfaces.OnItemClickListener;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
+
     LayoutBookBinding binding;
     Context context;
-    private List<BookDataModel> bookDataModelList;
+    private final List<BookDataModel> bookDataModelList;
     int selected_position = -1;
     private OnItemClickListener onItemClickListener;
 
@@ -59,25 +60,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         public ViewHolder(@NonNull LayoutBookBinding binding, OnItemClickListener onItemClickListener) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View view) {
-                    if (onItemClickListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            onItemClickListener.onItemClick(position);
-                            notifyItemChanged(selected_position);
-                            selected_position = getAdapterPosition();
-                            notifyItemChanged(selected_position);
-
-                        }
-
+            binding.getRoot().setOnClickListener(view -> {
+                if (onItemClickListener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        onItemClickListener.onItemClick(position);
+                        notifyItemChanged(selected_position);
+                        selected_position = getAdapterPosition();
+                        notifyItemChanged(selected_position);
                     }
                 }
             });
-
         }
-
     }
 }

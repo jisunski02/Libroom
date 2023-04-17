@@ -6,8 +6,8 @@
         android:bottomLeftRadius="5dp"
         />
     <stroke
-        android:color="@color/gray"
+        android:color="@color/brownshade3"
         android:width="2dp"/>
-    <solid android:color="@color/gray"/>
+    <solid android:color="@color/brownshade3"/>
 
 </shape>

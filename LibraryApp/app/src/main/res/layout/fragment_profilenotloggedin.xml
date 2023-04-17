@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
@@ -19,17 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-
-
-                android:textStyle="bold"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
             <LinearLayout
                 android:gravity="center"
                 android:orientation="vertical"
@@ -37,21 +27,51 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:src="@drawable/ic_construction"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
+                    android:src="@drawable/libroom_iconv2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This module is still under construction..."
+                    android:text="Hey! Welcome to LibRoom"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginTop="40dp"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You can view your information here once you login."
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/gray"
                     android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/bg_button"
+                    android:text="LOGIN"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
 
             </LinearLayout>
         </LinearLayout>

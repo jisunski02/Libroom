@@ -41,6 +41,7 @@
                     <LinearLayout
                         android:background="@drawable/bg_right_side"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -72,6 +73,7 @@
                         android:layout_gravity="end"
                         android:background="@drawable/bg_left_side"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -106,7 +108,7 @@
 
 
                 <LinearLayout
-                    android:background="@color/icon_color"
+                    android:background="@color/gray1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp">
@@ -118,13 +120,12 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        android:textSize="11sp"
-                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textColor="@color/black"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:gravity="center"
-                        android:text="Section"
-                        android:textStyle="bold" />
+                        android:text="Section" />
                 </LinearLayout>
 
 

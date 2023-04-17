@@ -57,7 +57,7 @@
 
 
                 <LinearLayout
-                    android:background="@color/icon_color"
+                    android:background="@color/gray1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp">
@@ -70,12 +70,11 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:textSize="11sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:gravity="center"
-                        android:text="Section"
-                        android:textStyle="bold" />
+                        android:text="Section" />
                 </LinearLayout>
 
 

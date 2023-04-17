@@ -2,6 +2,7 @@ package edu.ucu.libraryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,13 +18,15 @@ import android.widget.ImageView;
 
 import edu.ucu.libraryapp.databinding.ActivitySplashScreenBinding;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private ActivitySplashScreenBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivitySplashScreenBinding binding;
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
