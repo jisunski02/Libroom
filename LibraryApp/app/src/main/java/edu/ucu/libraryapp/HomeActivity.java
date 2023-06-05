@@ -31,7 +31,8 @@ import edu.ucu.libraryapp.datamodels.SectionDataModel;
 import edu.ucu.libraryapp.fragments.HistoryFragment;
 import edu.ucu.libraryapp.fragments.HistoryLoggedinFragment;
 import edu.ucu.libraryapp.fragments.HomeFragment;
-import edu.ucu.libraryapp.fragments.ProfileLoggedInFragment;
+import edu.ucu.libraryapp.fragments.ProfileLoggedInFacultyFragment;
+import edu.ucu.libraryapp.fragments.ProfileLoggedInStudentFragment;
 import edu.ucu.libraryapp.fragments.ProfileNotLoggedInFragment;
 import edu.ucu.libraryapp.fragments.SubSectionFragment;
 import edu.ucu.libraryapp.sharedpreferences.LoginSharedPrefManager;
@@ -59,7 +60,27 @@ public class HomeActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar.appToolbar);
 
-        binding.toolbar.activityTitle.setText("Welcome to LibRoom");
+
+
+        if(loginSharedPrefManager.isLoggedIn()){
+            if(loginSharedPrefManager.getKeyUserType().equals("student")){
+                binding.toolbar.activityTitle.setText("Welcome to LibRoom "+loginSharedPrefManager.getStudentFirstName()+"!");
+            }
+
+            else{
+                if(loginSharedPrefManager.getFacultyGender().contains("F")){
+                    binding.toolbar.activityTitle.setText("Welcome to LibRoom Maam "+loginSharedPrefManager.getFacultyFirstName()+"!");
+                }
+
+                else{
+                    binding.toolbar.activityTitle.setText("Welcome to LibRoom Sir "+loginSharedPrefManager.getFacultyFirstName() +"!");
+                }
+            }
+        }
+
+        else{
+            binding.toolbar.activityTitle.setText("Welcome to LibRoom");
+        }
 
         showBottomNavigationView();
 
@@ -100,7 +121,14 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.bottom_navigation_profile:
                     if(loginSharedPrefManager.isLoggedIn()){
-                        fragmentHandler = new ProfileLoggedInFragment();
+                        if(loginSharedPrefManager.getKeyUserType().equals("student")){
+                            fragmentHandler = new ProfileLoggedInStudentFragment();
+                        }
+
+                        else{
+                            fragmentHandler = new ProfileLoggedInFacultyFragment();
+                        }
+
                     }
                     else{
                         fragmentHandler = new ProfileNotLoggedInFragment();

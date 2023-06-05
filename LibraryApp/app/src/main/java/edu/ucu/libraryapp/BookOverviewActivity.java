@@ -1,11 +1,8 @@
 package edu.ucu.libraryapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -30,7 +27,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import edu.ucu.libraryapp.databinding.ActivityBookOverviewBinding;
 import edu.ucu.libraryapp.sharedpreferences.LoginSharedPrefManager;
@@ -93,7 +89,13 @@ public class BookOverviewActivity extends AppCompatActivity {
                 loadingDialog.setCancelable(false);
                 loadingDialog.show();
 
-                borrowBook(accession_no, title_id, loginSharedPrefManager.getStudentId());
+                if(loginSharedPrefManager.getKeyUserType().equals("student")){
+                    StudentBorrowBook(accession_no, title_id, loginSharedPrefManager.getStudentId());
+                }
+                else{
+                    FacultyBorrowBook(accession_no, title_id, loginSharedPrefManager.getFacultyId());
+                }
+
             }
 
             else {
@@ -116,9 +118,9 @@ public class BookOverviewActivity extends AppCompatActivity {
         binding.cvClose.setOnClickListener(view -> finish());
     }
 
-    private void borrowBook(String accession_no, String title_id, String student_id){
+    private void StudentBorrowBook(String accession_no, String title_id, String student_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                AppUtils.RESERVE_BOOK_ENDPOINT,
+                AppUtils.STUDENT_RESERVE_BOOK_ENDPOINT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -180,6 +182,80 @@ public class BookOverviewActivity extends AppCompatActivity {
     }
 
     private Map<String, String> checkParams(Map<String, String> map){
+        Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> pairs = (Map.Entry<String, String>)it.next();
+            if(pairs.getValue()==null){
+                map.put(pairs.getKey(), "");
+            }
+        }
+        return map;
+    }
+
+    private void FacultyBorrowBook(String accession_no, String title_id, String faculty_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                AppUtils.FACULTY_RESERVE_BOOK_ENDPOINT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String result = jsonObject.getString("success");
+
+                            if(result.equals("1")){
+                                loadingDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Reserved successful", Toast.LENGTH_SHORT).show();
+                                AppUtils.gotoActivity(BookOverviewActivity.this, HomeActivity.class);
+                                finish();
+                                finishAffinity();
+                            }
+
+                            else{
+                                loadingDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Book already reserved", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("anyText", response);
+                            Toast.makeText(getApplicationContext(), "Reservation Fail \n" + response.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            //This indicates that the reuest has either time out or there is no connection
+                            loadingDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (error instanceof ServerError) {
+                            //Indicates that the server responded with a error response
+                            Toast.makeText(getApplicationContext(), "Server unavailable at the moment", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("accession_no", accession_no);
+                params.put("title_id", title_id);
+                params.put("faculty_id", faculty_id);
+                return checkParams2(params);
+            }
+        };
+
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+
+
+    }
+
+    private Map<String, String> checkParams2(Map<String, String> map){
         Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, String> pairs = (Map.Entry<String, String>)it.next();

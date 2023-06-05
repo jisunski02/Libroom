@@ -1,20 +1,35 @@
 package edu.ucu.libraryapp.datamodels;
 
+import com.google.gson.annotations.SerializedName;
+
 public class StudentDataModel {
+
+    @SerializedName("studentID")
     private String studentID;
+    @SerializedName("studentNo")
     private String studentNo;
+    @SerializedName("studentFirstName")
     private String studentFirstName;
+    @SerializedName("studentMiddleName")
     private String studentMiddleName;
+    @SerializedName("studentLastName")
     private String studentLastName;
+    @SerializedName("studentGender")
     private String studentGender;
+    @SerializedName("studentBirthdate")
     private String studentBirthdate;
+    @SerializedName("studentCourse")
     private String studentCourse;
+    @SerializedName("studentContactNo")
     private String studentContactNo;
+    @SerializedName("studentEmailAddress")
     private String studentEmailAddress;
+    @SerializedName("studentAddress")
     private String studentAddress;
+    @SerializedName("studentStatus")
     private String studentStatus;
 
-    public StudentDataModel(String studentID, String studentNo, String studentFirstName, String studentMiddleName, String studentLastName, String studentGender, String studentBirthdate, String studentCourse, String studentContactNo, String studentEmailAddress, String studentAddress, String studentStatus) {
+   /* public StudentDataModel(String studentID, String studentNo, String studentFirstName, String studentMiddleName, String studentLastName, String studentGender, String studentBirthdate, String studentCourse, String studentContactNo, String studentEmailAddress, String studentAddress, String studentStatus) {
         this.studentID = studentID;
         this.studentNo = studentNo;
         this.studentFirstName = studentFirstName;
@@ -27,7 +42,7 @@ public class StudentDataModel {
         this.studentEmailAddress = studentEmailAddress;
         this.studentAddress = studentAddress;
         this.studentStatus = studentStatus;
-    }
+    } */
 
     public String getStudentID() {
         return studentID;

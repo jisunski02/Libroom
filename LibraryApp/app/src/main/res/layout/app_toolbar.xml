@@ -42,7 +42,7 @@
                     android:id="@+id/activity_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="13sp"
                     android:text="Home"
                     android:textStyle="bold"
                     android:textColor="@color/black"
