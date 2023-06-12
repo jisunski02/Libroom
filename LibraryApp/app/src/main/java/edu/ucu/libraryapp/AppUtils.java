@@ -21,7 +21,8 @@ public class AppUtils {
     public static String STUDENT_RESERVE_BOOK_ENDPOINT = BASE_URL+ "borrowbook.php";
     public static String FACULTY_RESERVE_BOOK_ENDPOINT = BASE_URL+ "borrowbook2.php";
     public static String VIEW_STUDENT_RESERVATION_ENDPOINT = BASE_URL+ "viewreservation.php?";
-    public static String VIEW_FACULTY_RESERVATION_ENDPOINT = BASE_URL+ "viewreservation2.php?";
+    public static String VIEW_FACULTY_RESERVATION_ENDPOINT = BASE_URL+ "viewreservationfaculty.php?";
+    public static String UPDATE_PASSWORD_ENDPOINT = BASE_URL+ "updatePassword.php";
 
     public static void gotoActivity(Activity fromActivity, Class<?> toActivity){
         Intent intent = new Intent(fromActivity, toActivity);

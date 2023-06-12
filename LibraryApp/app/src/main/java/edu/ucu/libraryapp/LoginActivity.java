@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void logInStudent(){
         final String username = binding.username.getText().toString().trim();
-        final String password = binding.studentPassword.getText().toString().trim();
+        final String password = binding.password.getText().toString().trim();
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
@@ -99,9 +99,15 @@ public class LoginActivity extends AppCompatActivity {
                                     String status = object.getString("status");
                                     String type = object.getString("type");
 
-                                    if(password.equals(username)){
+                                    String userNameText = binding.username.getText().toString();
+                                    String passwordText = binding.password.getText().toString();
+                                    if(username.equals(passwordText)){
                                         loadingDialog.dismiss();
-                                        Toast.makeText(LoginActivity.this, "Reset Password", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                                        intent.putExtra("username",username);
+                                        intent.putExtra("type",type);
+                                        startActivity(intent);
+                                        finish();
                                     }
 
                                     else if(status.equals("1")){
@@ -183,14 +189,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isValidPassword(){
-        String password = binding.studentPassword.getText().toString().trim();
+        String password = binding.password.getText().toString().trim();
         if(password.isEmpty()){
-            binding.studentPassword.setError("Password is required");
+            binding.password.setError("Password is required");
             return false;
         }
 
         else{
-            binding.studentPassword.setError(null);
+            binding.password.setError(null);
             return true;
         }
     }
@@ -339,5 +345,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
 
 }

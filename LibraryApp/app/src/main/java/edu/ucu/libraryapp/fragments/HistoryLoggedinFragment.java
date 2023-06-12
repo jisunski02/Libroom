@@ -54,11 +54,11 @@ public class HistoryLoggedinFragment extends Fragment {
         loginSharedPrefManager = new LoginSharedPrefManager(requireActivity());
 
         if(loginSharedPrefManager.getKeyUserType().equals("student")){
-            getStudentReservedBook();
+            getStudentReservedBook("0");
         }
 
         else{
-            getFacultyReservedBook();
+            getFacultyReservedBook("0");
         }
 
         binding.btnReserved.setOnClickListener(v->{
@@ -68,15 +68,15 @@ public class HistoryLoggedinFragment extends Fragment {
             binding.btnBorrowed.setBackgroundResource(R.drawable.bg_button2);
             binding.btnReturned.setTextColor(Color.BLACK);
             binding.btnReturned.setBackgroundResource(R.drawable.bg_button2);
+            binding.message.setText("No reserved books yet");
 
-            binding.linearNohistory.setVisibility(View.GONE);
-
+            binding.tvMessage.setText("Loading borrowed books...");
             if(loginSharedPrefManager.getKeyUserType().equals("student")){
-                getStudentReservedBook();
+                getStudentReservedBook("0");
             }
 
             else{
-                getFacultyReservedBook();
+                getFacultyReservedBook("0");
             }
 
         });
@@ -88,9 +88,18 @@ public class HistoryLoggedinFragment extends Fragment {
             binding.btnBorrowed.setBackgroundResource(R.drawable.bg_button);
             binding.btnReturned.setTextColor(Color.BLACK);
             binding.btnReturned.setBackgroundResource(R.drawable.bg_button2);
-            binding.rvReservation.setAdapter(null);
-            binding.message.setText("This section is not yet available");
-            binding.linearNohistory.setVisibility(View.VISIBLE);
+            binding.message.setText("No borrowed books yet");
+
+            binding.tvMessage.setText("Loading borrowed books...");
+
+            if(loginSharedPrefManager.getKeyUserType().equals("student")){
+                getStudentReservedBook("1");
+            }
+
+            else{
+                getFacultyReservedBook("1");
+            }
+
         });
 
         binding.btnReturned.setOnClickListener(v->{
@@ -101,8 +110,16 @@ public class HistoryLoggedinFragment extends Fragment {
             binding.btnReturned.setTextColor(Color.WHITE);
             binding.btnReturned.setBackgroundResource(R.drawable.bg_button);
             binding.rvReservation.setAdapter(null);
-            binding.message.setText("This section is not yet available");
-            binding.linearNohistory.setVisibility(View.VISIBLE);
+            binding.message.setText("No returned books yet");
+
+            binding.tvMessage.setText("Loading returned books...");
+            if(loginSharedPrefManager.getKeyUserType().equals("student")){
+                getStudentReservedBook("2");
+            }
+
+            else{
+                getFacultyReservedBook("2");
+            }
 
         });
 
@@ -110,10 +127,10 @@ public class HistoryLoggedinFragment extends Fragment {
     }
 
 
-    private void getStudentReservedBook() {
+    private void getStudentReservedBook(String status) {
 
         String studentID = loginSharedPrefManager.getStudentId();
-        String viewReservationURL = AppUtils.VIEW_STUDENT_RESERVATION_ENDPOINT + "student_id="+studentID;
+        String viewReservationURL = AppUtils.VIEW_STUDENT_RESERVATION_ENDPOINT + "student_id="+studentID+"&status="+status;
 
         reservationDataModelList.clear();
         binding.rvReservation.setAdapter(null);
@@ -144,10 +161,10 @@ public class HistoryLoggedinFragment extends Fragment {
 
     }
 
-    private void getFacultyReservedBook() {
+    private void getFacultyReservedBook(String status) {
 
-        String studentID = loginSharedPrefManager.getFacultyId();
-        String viewReservationURL = AppUtils.VIEW_FACULTY_RESERVATION_ENDPOINT + "faculty_id="+studentID;
+        String facultyID = loginSharedPrefManager.getFacultyId();
+        String viewReservationURL = AppUtils.VIEW_FACULTY_RESERVATION_ENDPOINT + "faculty_id="+facultyID+"&status="+status;
 
         reservationDataModelList.clear();
         binding.rvReservation.setAdapter(null);

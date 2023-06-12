@@ -21,6 +21,7 @@ public class LoginSharedPrefManager {
     //Student
     private final String KEY_STUDENT_ID = "KEY_STUDENT_ID";
     private final String KEY_STUDENT_NO = "KEY_STUDENT_NO";
+    private final String KEY_STUDENT_PASSWORD = "KEY_STUDENT_PASSWORD";
     private final String KEY_STUDENT_FIRSTNAME = "KEY_STUDENT_FIRSTNAME";
     private final String KEY_STUDENT_MIDDLENAME = "KEY_STUDENT_MIDDLENAME";
     private final String KEY_STUDENT_LASTNAME = "KEY_STUDENT_LASTNAME";
@@ -34,8 +35,7 @@ public class LoginSharedPrefManager {
 
     //Faculty
     private final String KEY_FACULTY_ID = "KEY_FACULTY_ID";
-
-
+    private final String KEY_FACULTY_PASSWORD = "KEY_FACULTY_PASSWORD";
     private final String KEY_FACULTY_NO = "KEY_FACULTY_NO";
     private final String KEY_FACULTY_FIRSTNAME = "KEY_FACULTY_FIRSTNAME";
     private final String KEY_FACULTY_MIDDLENAME = "KEY_FACULTY_MIDDLENAME";
@@ -74,6 +74,19 @@ public class LoginSharedPrefManager {
         String id = login_preferences.getString(KEY_STUDENT_ID, null);
         if(id != null) {
             return id;
+        }
+        return null;
+    }
+
+    public void setStudentPassword(String password){
+        login_preferences_editor.putString(KEY_STUDENT_PASSWORD, password);
+        login_preferences_editor.commit();
+    }
+
+    public String getStudentPassword() {
+        String password = login_preferences.getString(KEY_STUDENT_PASSWORD, null);
+        if(password != null) {
+            return password;
         }
         return null;
     }
@@ -243,6 +256,20 @@ public class LoginSharedPrefManager {
         String id_no = login_preferences.getString(KEY_FACULTY_NO, null);
         if(id_no != null) {
             return id_no;
+        }
+        return null;
+    }
+
+
+    public void setFacultyPassword(String password){
+        login_preferences_editor.putString(KEY_FACULTY_PASSWORD, password);
+        login_preferences_editor.commit();
+    }
+
+    public String getFacultyPassword() {
+        String password = login_preferences.getString(KEY_FACULTY_PASSWORD, null);
+        if(password != null) {
+            return password;
         }
         return null;
     }

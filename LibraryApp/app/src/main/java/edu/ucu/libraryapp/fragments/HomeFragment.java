@@ -59,6 +59,10 @@ public class HomeFragment extends Fragment {
 
         viewSection();
 
+        binding.pdfSection.setOnClickListener(v->{
+            AppUtils.toastMessage(requireActivity(), "Not available yet.");
+        });
+
         return binding.getRoot();
 
     }
