@@ -2,6 +2,7 @@ package edu.ucu.libraryapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.ucu.libraryapp.databinding.LayoutBookBinding;
 import edu.ucu.libraryapp.databinding.LayoutBookv2Binding;
-import edu.ucu.libraryapp.datamodels.BookDataModel;
 import edu.ucu.libraryapp.datamodels.ReservationDataModel;
-import edu.ucu.libraryapp.interfaces.OnItemClickListener;
 
-public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ViewHolder> {
+public class ReturnedAdapter extends RecyclerView.Adapter<ReturnedAdapter.ViewHolder> {
 
 
     LayoutBookv2Binding binding;
@@ -24,7 +22,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     int selected_position = -1;
 
 
-    public ReservationAdapter(Context context, List<ReservationDataModel> reservationDataModelList   ){
+    public ReturnedAdapter(Context context, List<ReservationDataModel> reservationDataModelList   ){
         this.context = context;
         this.reservationDataModelList = reservationDataModelList;
     }
@@ -38,13 +36,27 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReservationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReturnedAdapter.ViewHolder holder, int position) {
 
         ReservationDataModel reservationDataModel = reservationDataModelList.get(position);
 
         holder.binding.tvTitle.setText(reservationDataModel.getTitle());
         holder.binding.tvAuthor.setText("by "+reservationDataModel.getTitleAuthor());
         holder.binding.tvReservationdate.setText(reservationDataModel.getReservation_date());
+
+        holder.binding.linearBookfine.setVisibility(View.VISIBLE);
+        if(reservationDataModel.getReturnPenalty().isEmpty()){
+
+            holder.binding.tvFine.setText("Php 0.00");
+        }
+
+        else{
+
+            holder.binding.tvFine.setText("Php "+reservationDataModel.getReturnPenalty()+".00");
+        }
+
+        holder.binding.linearReturnDate.setVisibility(View.VISIBLE);
+        holder.binding.tvReturnedDate.setText(reservationDataModel.getReturnDate());
 
     }
 

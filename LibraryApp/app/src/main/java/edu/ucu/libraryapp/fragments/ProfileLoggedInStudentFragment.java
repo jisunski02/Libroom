@@ -1,16 +1,22 @@
 package edu.ucu.libraryapp.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import edu.ucu.libraryapp.AppUtils;
+import edu.ucu.libraryapp.ChangePasswordStudentActivity;
 import edu.ucu.libraryapp.HomeActivity;
 
+import edu.ucu.libraryapp.databinding.DialogLogoutBinding;
 import edu.ucu.libraryapp.databinding.FragmentProfileloggedinstudentBinding;
 import edu.ucu.libraryapp.sharedpreferences.LoginSharedPrefManager;
 
@@ -55,10 +61,37 @@ public class ProfileLoggedInStudentFragment extends Fragment {
             //getStudentProfile();
         }
 
+        binding.btnChangePassword.setOnClickListener(v->{
+            if(loginSharedPrefManager.getKeyUserType().equals("student")){
+                AppUtils.gotoActivity(getActivity(), ChangePasswordStudentActivity.class);
+            }
+            else{
+                AppUtils.gotoActivity(getActivity(), ChangePasswordStudentActivity.class);
+            }
+
+
+        });
+
         binding.btnLogout.setOnClickListener(v->{
-            loginSharedPrefManager.logOutStudent();
-            Toast.makeText(requireActivity(), "Logged out successful", Toast.LENGTH_SHORT).show();
-            AppUtils.gotoActivity(requireActivity(), HomeActivity.class);
+            Dialog dialogLogout = new Dialog(requireContext());
+            DialogLogoutBinding binding = DialogLogoutBinding.inflate(getLayoutInflater());
+            dialogLogout.requestWindowFeature(Window.FEATURE_NO_TITLE);//...........
+            dialogLogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogLogout.setContentView(binding.getRoot());
+
+            binding.btnYes.setOnClickListener(v2->{
+                dialogLogout.dismiss();
+                loginSharedPrefManager.logOutStudent();
+                Toast.makeText(requireActivity(), "Logged out successful", Toast.LENGTH_SHORT).show();
+                AppUtils.gotoActivity(requireActivity(), HomeActivity.class);
+            });
+
+            binding.btnNo.setOnClickListener(v3->{
+                dialogLogout.dismiss();
+            });
+
+            dialogLogout.setCancelable(true);
+            dialogLogout.show();
         });
 
         return binding.getRoot();

@@ -24,25 +24,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <android.widget.Button
-                    android:id="@+id/btn_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:background="@drawable/bg_button2"
-                    android:text="LOGout"
-                    android:textColor="@color/gray"
-                    android:textSize="11sp"
+                <LinearLayout
                     android:layout_gravity="end"
-                    android:drawableStart="@drawable/ic_baseline_logout_24"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.widget.Button
+                        android:id="@+id/btn_change_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_button"
+                        android:text="Update Password"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:layout_gravity="end"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
+                        />
+
+                    <android.widget.Button
+                        android:id="@+id/btn_logout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_button2"
+                        android:text="LOGout"
+                        android:textColor="@color/gray"
+                        android:textSize="11sp"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/ic_baseline_logout_24"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
+                        />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:orientation="horizontal"

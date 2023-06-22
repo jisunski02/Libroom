@@ -263,6 +263,8 @@ public class LoginActivity extends AppCompatActivity {
                 loginSharedPrefManager.setStudentStatus(studentStatus);
 
             }
+
+            loginSharedPrefManager.setStudentPassword(binding.password.getText().toString());
             loadingDialog.dismiss();
             AppUtils.gotoActivity(LoginActivity.this, HomeActivity.class);
             finish();
@@ -331,6 +333,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginSharedPrefManager.setFacultyStatus(facultyStatus);
 
             }
+            loginSharedPrefManager.setFacultyPassword(binding.password.getText().toString());
             loadingDialog.dismiss();
             AppUtils.gotoActivity(LoginActivity.this, HomeActivity.class);
             finish();

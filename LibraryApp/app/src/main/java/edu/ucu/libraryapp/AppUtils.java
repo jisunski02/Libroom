@@ -20,8 +20,12 @@ public class AppUtils {
     public static String VIEW_FACULTY_PROFILE_ENDPOINT = BASE_URL+ "viewfacultyprofile.php?";
     public static String STUDENT_RESERVE_BOOK_ENDPOINT = BASE_URL+ "borrowbook.php";
     public static String FACULTY_RESERVE_BOOK_ENDPOINT = BASE_URL+ "borrowbook2.php";
-    public static String VIEW_STUDENT_RESERVATION_ENDPOINT = BASE_URL+ "viewreservation.php?";
+    public static String VIEW_STUDENT_RESERVATION_ENDPOINT = BASE_URL+ "viewreservationstudent.php?";
+    public static String VIEW_STUDENT_BORROWED_ENDPOINT = BASE_URL+ "viewborrowedstudent.php?";
     public static String VIEW_FACULTY_RESERVATION_ENDPOINT = BASE_URL+ "viewreservationfaculty.php?";
+    public static String VIEW_FACULTY_BORROWED_ENDPOINT = BASE_URL+ "viewborrowedfaculty.php?";
+    public static String VIEW_STUDENT_RETURNED_BOOKS_ENDPOINT = BASE_URL+ "viewreturned.php?";
+    public static String VIEW_FACULTY_RETURNED_BOOKS_ENDPOINT = BASE_URL+ "viewreturnedfaculty.php?";
     public static String UPDATE_PASSWORD_ENDPOINT = BASE_URL+ "updatePassword.php";
 
     public static void gotoActivity(Activity fromActivity, Class<?> toActivity){

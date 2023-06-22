@@ -51,10 +51,10 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -111,8 +111,67 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/linear_bookfine"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:textSize="11sp"
+                                android:textColor="@color/gray"
+                                android:maxLines="1"
+                                android:text="Book fine:" />
+
+                            <TextView
+                                android:id="@+id/tv_fine"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11sp"
+                                android:textColor="@color/black"
+                                android:text="Php 1000.00" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/linear_return_date"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:textSize="11sp"
+                                android:textColor="@color/gray"
+                                android:maxLines="1"
+                                android:text="Returned Date:" />
+
+                            <TextView
+                                android:id="@+id/tv_returned_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11sp"
+                                android:textColor="@color/black"
+                                android:text="Php 1000.00" />
+
+                        </LinearLayout>
                     </LinearLayout>
             </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/icon_disclaimer"
+                android:visibility="gone"
+                android:src="@drawable/ic_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
 
         </LinearLayout>
 

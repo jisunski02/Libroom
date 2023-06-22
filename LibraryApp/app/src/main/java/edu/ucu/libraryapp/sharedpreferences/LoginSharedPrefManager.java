@@ -33,6 +33,7 @@ public class LoginSharedPrefManager {
     private final String KEY_STUDENT_ADDRESS = "KEY_STUDENT_ADDRESS";
     private final String KEY_STUDENT_STATUS = "KEY_STUDENT_STATUS";
 
+
     //Faculty
     private final String KEY_FACULTY_ID = "KEY_FACULTY_ID";
     private final String KEY_FACULTY_PASSWORD = "KEY_FACULTY_PASSWORD";
@@ -384,6 +385,7 @@ public class LoginSharedPrefManager {
         login_preferences_editor.remove(KEY_STUDENT_ADDRESS);
         login_preferences_editor.remove(KEY_STUDENT_STATUS);
         login_preferences_editor.remove(KEY_USER_TYPE);
+        login_preferences_editor.remove(KEY_STUDENT_PASSWORD);
         login_preferences_editor.putBoolean(login_IS_LOGIN, false);
         login_preferences_editor.clear();
         login_preferences_editor.commit();
@@ -399,6 +401,7 @@ public class LoginSharedPrefManager {
         login_preferences_editor.remove(KEY_FACULTY_EMAILADDRESS);
         login_preferences_editor.remove(KEY_FACULTY_STATUS);
         login_preferences_editor.remove(KEY_USER_TYPE);
+        login_preferences_editor.remove(KEY_FACULTY_PASSWORD);
         login_preferences_editor.putBoolean(login_IS_LOGIN, false);
         login_preferences_editor.clear();
         login_preferences_editor.commit();
