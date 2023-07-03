@@ -2,24 +2,24 @@ package edu.ucu.libraryapp.datamodels;
 
 public class PDFDataModel {
     private String pdfID;
-    private String pdfName;
-    private String pdfFile;
+    private String pdfTitle;
+    private String pdfFileName;
 
-    public PDFDataModel(String pdfID, String pdfName, String pdfFile) {
+    public PDFDataModel(String pdfID, String pdfTitle, String pdfFileName) {
         this.pdfID = pdfID;
-        this.pdfName = pdfName;
-        this.pdfFile = pdfFile;
+        this.pdfTitle = pdfTitle;
+        this.pdfFileName = pdfFileName;
     }
 
     public String getPdfID() {
         return pdfID;
     }
 
-    public String getPdfName() {
-        return pdfName;
+    public String getPdfTitle() {
+        return pdfTitle;
     }
 
-    public String getPdfFile() {
-        return pdfFile;
+    public String getPdfFileName() {
+        return pdfFileName;
     }
 }

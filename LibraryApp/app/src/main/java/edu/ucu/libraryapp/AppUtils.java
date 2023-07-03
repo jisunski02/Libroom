@@ -27,6 +27,7 @@ public class AppUtils {
     public static String VIEW_STUDENT_RETURNED_BOOKS_ENDPOINT = BASE_URL+ "viewreturned.php?";
     public static String VIEW_FACULTY_RETURNED_BOOKS_ENDPOINT = BASE_URL+ "viewreturnedfaculty.php?";
     public static String UPDATE_PASSWORD_ENDPOINT = BASE_URL+ "updatePassword.php";
+    public static String VIEW_PDF_ENDPOINT = BASE_URL+ "viewpdf.php";
 
     public static void gotoActivity(Activity fromActivity, Class<?> toActivity){
         Intent intent = new Intent(fromActivity, toActivity);

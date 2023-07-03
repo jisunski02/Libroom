@@ -58,6 +58,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
         public ViewHolder(@NonNull LayoutSectionBinding binding, OnItemClickListener onItemClickListener) {
             super(binding.getRoot());
             this.binding = binding;
+
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
 
                 @Override

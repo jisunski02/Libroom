@@ -1,32 +1,21 @@
 package edu.ucu.libraryapp.fragments;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.os.Build;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -36,13 +25,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import edu.ucu.libraryapp.AppUtils;
+import edu.ucu.libraryapp.R;
+import edu.ucu.libraryapp.adapters.PdfAdapter;
 import edu.ucu.libraryapp.adapters.SectionAdapter;
 import edu.ucu.libraryapp.databinding.FragmentHomeBinding;
+import edu.ucu.libraryapp.datamodels.PDFDataModel;
 import edu.ucu.libraryapp.datamodels.SectionDataModel;
-import edu.ucu.libraryapp.interfaces.OnItemClickListener;
 
 public class HomeFragment extends Fragment {
 
@@ -50,7 +40,10 @@ public class HomeFragment extends Fragment {
     private List<SectionDataModel> sectionDataModelList = new ArrayList<>();
     private SectionAdapter sectionAdapter;
 
-
+    private List<PDFDataModel> pdfDataModelList = new ArrayList<>();
+    private PdfAdapter pdfAdapter;
+    boolean loadedTvSection;
+    boolean loadedPdfSection;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,9 +51,22 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater,container,false);
 
         viewSection();
+        loadedTvSection = true;
+
+        binding.tvSection.setOnClickListener(v->{
+            binding.tvSection.setTextColor(Color.WHITE);
+            binding.tvSection.setBackgroundResource(R.drawable.bg_button);
+            binding.pdfSection.setTextColor(Color.BLACK);
+            binding.pdfSection.setBackgroundResource(R.drawable.bg_button2);
+            viewSection();
+        });
 
         binding.pdfSection.setOnClickListener(v->{
-            AppUtils.toastMessage(requireActivity(), "Not available yet.");
+            binding.pdfSection.setTextColor(Color.WHITE);
+            binding.pdfSection.setBackgroundResource(R.drawable.bg_button);
+            binding.tvSection.setTextColor(Color.BLACK);
+            binding.tvSection.setBackgroundResource(R.drawable.bg_button2);
+            viewPDF();
         });
 
         return binding.getRoot();
@@ -68,7 +74,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void viewSection() {
-
+        binding.rvSection.setAdapter(null);
+        sectionDataModelList.clear();
         binding.linearLoading.setVisibility(View.VISIBLE);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, AppUtils.VIEW_SECTION_ENDPOINT,
@@ -109,6 +116,65 @@ public class HomeFragment extends Fragment {
                             AppUtils.openFragment(fragmentHandler, "", getActivity());
 
                         });
+
+                    }
+                    catch (JSONException e) {
+                        Log.e("ParseFail", e.toString());
+                        binding.linearLoading.setVisibility(View.GONE);
+                        binding.linearApi.setVisibility(View.VISIBLE);
+                    }
+                },
+                error -> {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        Log.e("TimeoutOrNoconnection", error.toString());
+                        binding.linearNointernet.setVisibility(View.VISIBLE);
+                    }
+                    else if (error instanceof ServerError) {
+                        Log.e("PHPERROR", error.toString());
+                        binding.linearApi.setVisibility(View.VISIBLE);
+
+
+                    }
+                    binding.linearLoading.setVisibility(View.GONE);
+
+                }) {
+
+        };
+
+        Volley.newRequestQueue(requireActivity()).add(stringRequest);
+    }
+
+    private void viewPDF() {
+        binding.rvSection.setAdapter(null);
+        pdfDataModelList.clear();
+        binding.linearLoading.setVisibility(View.VISIBLE);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, AppUtils.VIEW_PDF_ENDPOINT,
+                response -> {
+
+                    try {
+                        JSONArray section = new JSONArray(response);
+
+                        for (int i = 0; i<section.length(); i++) {
+
+
+                            JSONObject sectionObject = section.getJSONObject(i);
+
+                            String pdfId = sectionObject.getString("pdfId");
+                            String pdfTitle = sectionObject.getString("pdfTitle");
+                            String pdfFileName = sectionObject.getString("pdfFileName");
+
+                            PDFDataModel pdfDataModel = new PDFDataModel(pdfId,pdfTitle,pdfFileName);
+
+                            pdfDataModelList.add(pdfDataModel);
+
+                        }
+                        binding.linearLoading.setVisibility(View.GONE);
+
+                        binding.rvSection.setLayoutManager(new LinearLayoutManager(getContext()));
+                        pdfAdapter = new PdfAdapter(getContext(), pdfDataModelList);
+                        binding.rvSection.setAdapter(pdfAdapter);
+
 
                     }
                     catch (JSONException e) {
