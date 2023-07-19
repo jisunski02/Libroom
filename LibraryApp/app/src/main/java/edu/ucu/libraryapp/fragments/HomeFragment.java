@@ -1,11 +1,15 @@
 package edu.ucu.libraryapp.fragments;
 
+import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ucu.libraryapp.AppUtils;
+import edu.ucu.libraryapp.BookOverviewActivity;
 import edu.ucu.libraryapp.R;
 import edu.ucu.libraryapp.adapters.PdfAdapter;
 import edu.ucu.libraryapp.adapters.SectionAdapter;
@@ -44,6 +49,7 @@ public class HomeFragment extends Fragment {
     private PdfAdapter pdfAdapter;
     boolean loadedTvSection;
     boolean loadedPdfSection;
+    Dialog loadingDialog;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,7 +82,7 @@ public class HomeFragment extends Fragment {
     private void viewSection() {
         binding.rvSection.setAdapter(null);
         sectionDataModelList.clear();
-        binding.linearLoading.setVisibility(View.VISIBLE);
+        showDialogLoading("Loading book sections...");
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, AppUtils.VIEW_SECTION_ENDPOINT,
                 response -> {
@@ -98,11 +104,14 @@ public class HomeFragment extends Fragment {
                             sectionDataModelList.add(sectionDataModel);
 
                         }
-                        binding.linearLoading.setVisibility(View.GONE);
+
 
                         binding.rvSection.setLayoutManager(new GridLayoutManager(getContext(), 2));
                         sectionAdapter = new SectionAdapter(getContext(), sectionDataModelList);
                         binding.rvSection.setAdapter(sectionAdapter);
+
+                        loadingDialog.dismiss();
+
 
                         sectionAdapter.setOnItemClickListener(position -> {
                             SectionDataModel sectionDataModel = sectionDataModelList.get(position);
@@ -147,7 +156,7 @@ public class HomeFragment extends Fragment {
     private void viewPDF() {
         binding.rvSection.setAdapter(null);
         pdfDataModelList.clear();
-        binding.linearLoading.setVisibility(View.VISIBLE);
+        showDialogLoading("Loading pdf sections...");
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, AppUtils.VIEW_PDF_ENDPOINT,
                 response -> {
@@ -169,12 +178,12 @@ public class HomeFragment extends Fragment {
                             pdfDataModelList.add(pdfDataModel);
 
                         }
-                        binding.linearLoading.setVisibility(View.GONE);
 
                         binding.rvSection.setLayoutManager(new LinearLayoutManager(getContext()));
                         pdfAdapter = new PdfAdapter(getContext(), pdfDataModelList);
                         binding.rvSection.setAdapter(pdfAdapter);
 
+                        loadingDialog.dismiss();
 
                     }
                     catch (JSONException e) {
@@ -203,5 +212,18 @@ public class HomeFragment extends Fragment {
         Volley.newRequestQueue(requireActivity()).add(stringRequest);
     }
 
+
+    private void showDialogLoading(String message){
+        loadingDialog = new Dialog(requireActivity());
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);//...........
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.setContentView(R.layout.dialog_loading);
+
+        TextView title_ = loadingDialog.findViewById(R.id.title);
+        title_.setText(message);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+    }
 
 }

@@ -10,8 +10,8 @@ android {
         applicationId "edu.ucu.libraryapp"
         minSdk 26
         targetSdk 33
-        versionCode 3
-        versionName "2.7.0"
+        versionCode 4
+        versionName "2.9.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

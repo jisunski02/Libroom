@@ -170,7 +170,7 @@ public class BookOverviewActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("accession_no", accession_no);
                 params.put("title_id", title_id);
-                params.put("student_id", student_id);
+                params.put("borrower_id", student_id);
                 return checkParams(params);
             }
         };
@@ -244,7 +244,7 @@ public class BookOverviewActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("accession_no", accession_no);
                 params.put("title_id", title_id);
-                params.put("faculty_id", faculty_id);
+                params.put("borrower_id", faculty_id);
                 return checkParams2(params);
             }
         };

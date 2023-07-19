@@ -40,7 +40,7 @@ public class HistoryLoggedinFragment extends Fragment {
     private final List<ReservationDataModel> reservationDataModelList = new ArrayList<>();
     LoginSharedPrefManager loginSharedPrefManager;
     ReservationBorrowedAdapter reservationAdapter;
-
+    RequestQueue requestQueue;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +125,7 @@ public class HistoryLoggedinFragment extends Fragment {
     private void getStudentReservedBook(boolean isBorrowed, String status) {
 
         String studentID = loginSharedPrefManager.getStudentId();
-        String viewReservationURL = AppUtils.VIEW_STUDENT_RESERVATION_ENDPOINT + "student_id=" + studentID + "&status=" + status;
+        String viewReservationURL = AppUtils.VIEW_STUDENT_RESERVATION_ENDPOINT + "borrower_id=" + studentID + "&status=" + status;
 
         reservationDataModelList.clear();
         binding.rvReservation.setAdapter(null);
@@ -153,6 +153,17 @@ public class HistoryLoggedinFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
 
+
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (requestQueue != null) {
+            requestQueue.cancelAll(this);
+        }
     }
 
     private void getStudentBorrowedBook(boolean isBorrowed, String status) {
@@ -183,7 +194,7 @@ public class HistoryLoggedinFragment extends Fragment {
                     binding.linearLoading.setVisibility(View.GONE);
                 });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
 
     }
@@ -216,7 +227,7 @@ public class HistoryLoggedinFragment extends Fragment {
                     binding.linearLoading.setVisibility(View.GONE);
                 });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
 
     }
@@ -249,7 +260,7 @@ public class HistoryLoggedinFragment extends Fragment {
                     binding.linearLoading.setVisibility(View.GONE);
                 });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
 
     }
@@ -298,7 +309,7 @@ public class HistoryLoggedinFragment extends Fragment {
 
             }
 
-            binding.rvReservation.setLayoutManager(new LinearLayoutManager(requireActivity()));
+            binding.rvReservation.setLayoutManager(new LinearLayoutManager(getContext()));
             reservationAdapter = new ReservationBorrowedAdapter(getActivity(), reservationDataModelList);
             binding.rvReservation.setAdapter(reservationAdapter);
             binding.linearLoading.setVisibility(View.GONE);
@@ -342,7 +353,7 @@ public class HistoryLoggedinFragment extends Fragment {
                     binding.linearLoading.setVisibility(View.GONE);
                 });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
 
     }
@@ -396,7 +407,7 @@ public class HistoryLoggedinFragment extends Fragment {
 
             }
 
-            binding.rvReservation.setLayoutManager(new LinearLayoutManager(requireActivity()));
+            binding.rvReservation.setLayoutManager(new LinearLayoutManager(getContext()));
             ReturnedAdapter returnedAdapter = new ReturnedAdapter(getActivity(), reservationDataModelList);
             binding.rvReservation.setAdapter(returnedAdapter);
             binding.linearLoading.setVisibility(View.GONE);
@@ -441,9 +452,10 @@ public class HistoryLoggedinFragment extends Fragment {
                     binding.linearLoading.setVisibility(View.GONE);
                 });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        requestQueue = Volley.newRequestQueue(requireActivity());
         requestQueue.add(stringRequest);
 
     }
+
 
 }

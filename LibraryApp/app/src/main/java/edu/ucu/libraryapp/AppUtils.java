@@ -1,7 +1,13 @@
 package edu.ucu.libraryapp;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -48,5 +54,6 @@ public class AppUtils {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
 
     }
+
 
 }
